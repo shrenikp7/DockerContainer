@@ -1,0 +1,48 @@
+ MySQL Custom Docker Container | Docker Compose:
+
+Create directory for persistent data volume:
+Create directory /mysql/mysql8020_data/docker_compose1/data_1 to store MySQL docker container persistent data.
+Create my.cnf file at /mysql/docker_compose_1/conf.d/:
+[mysqld]
+default_authentication-plugin=mysql_native_password
+server_id=7777
+port=7399
+Note: You might be wondering how local conf.d director's my.cnf file is read by docker container. Local my.cnf file is mapped to container /etc/mysql/conf.d directory which can be access by following command. File my.cnf is not mapped, directory conf.d is mapped to /etc/mysql/conf.d
+# docker exec -it <container_name> bash 
+Create Docker file /mysql/docker_compose_1/docker_compose.yml:
+version: '3.7'
+services:
+  <service_name>:
+    container_name: <container_name>
+    image: mysql:8.0.20
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "<password>"
+    volumes:
+      - /mysql/mysql8020_data/docker_compose1/data_1:/var/lib/mysql
+      - /mysql/mysql8020_data/docker_compose1/conf.d:/etc/mysql/conf.d
+Bring up MySQL Docker container using Docker-compose:
+# docker-compose up
+Connect MySQL instance check custom parameters implementation:
+# docker exec -it <caontainer_name> mysql -uroot -p
+mysql > show variables like '%port%'; 
++--------------------------+-----------+
+| Variable_name            | Value |
++--------------------------+-----------+
+| port                             | 7399  |
++--------------------------+-----------+
+| server_id                     | 7777  |
++--------------------------+----------------------------------------------+
+| default_authentication_plugin | mysql_native_password |
++--------------------------+----------------------------------------------+
+Connect Docker container bash and inspect container:
+# docker exec -it <container_name> bash
+# docker inspect shrenik_20 | grep -i conf.d
+"/mysql/mysql8020_data/docker_compose1/conf.d:/etc/mysql/conf.d:rw"
+"Source": "/mysql/mysql8020_data/docker_compose1/conf.d",
+"Destination": "/etc/mysql/conf.d",
+"/etc/mysql/conf.d": {},
+
+    Explore Docker Compose file version 3 parameters 
+    Explore environment variables for Docker MySQL 
+    Explore Docker MySQL container with Galera and Percona Xtrabackup
