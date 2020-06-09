@@ -42,7 +42,3 @@ Connect Docker container bash and inspect container:
 "Source": "/mysql/mysql8020_data/docker_compose1/conf.d",
 "Destination": "/etc/mysql/conf.d",
 "/etc/mysql/conf.d": {},
-
-    Explore Docker Compose file version 3 parameters 
-    Explore environment variables for Docker MySQL 
-    Explore Docker MySQL container with Galera and Percona Xtrabackup
