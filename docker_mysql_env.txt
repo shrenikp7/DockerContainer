@@ -1,3 +1,10 @@
+////----////
+Running MySQL Docker container without .cnf file using command line arguments. Folloiwng environment variables are available. It was generate using following command
+////----////
+####
+#docker run -it --rm mysql:8.0.20 --verbose --help > /tmp/docker_mysql_env.txt
+####
+
 mysqld  Ver 8.0.20 for Linux on x86_64 (MySQL Community Server - GPL)
 Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
 
